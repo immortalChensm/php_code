@@ -81,7 +81,7 @@ class Alipay extends Base
         $private_path =  "./vendor/Alipay/key/rsa_private_key.pem";//私钥路径
         //构造业务请求参数的集合(订单信息)
         $content = array();
-        $content['subject'] = I("subject","趣喝茶商城订单");
+        $content['subject'] = I("subject","商城订单");
         $content['out_trade_no'] = $orderSn;
         $content['timeout_express'] = "600";
         $content['total_amount'] = $orderAmount;
