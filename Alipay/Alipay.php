@@ -8,7 +8,7 @@ class Alipay extends Base
 {
     /**
      * app端发起支付宝,支付宝返回服务器端,  返回到这里
-     * http://www.tp-shop.cn/index.php/Api/Payment/alipayNotify
+     * index.php/Api/Payment/alipayNotify
      */
     public function alipayNotify()
     {
