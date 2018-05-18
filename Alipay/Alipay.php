@@ -16,10 +16,10 @@ class Alipay extends Base
         require_once('vendor/Alipay/aop/AopClient.php');
         $aop = new \AopClient;
         $public_path = "./vendor/Alipay/key/alipay_public_key_sha.pem";//公钥路径
-        $aop->alipayrsaPublicKey = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsymouNF99FfWOHTv+STYvTX/gKaWvUCk+fi5UWXnm1R9USsZDlJ2ei7ZOo4wjTTZDsziDhyAMsQCAzALbTEMq4gTqil0qp05AdUeJ/MtgSE5pmekf0u3VkIZp9zRzLJoJWIXXwtfuPvGgORTyuIiJ1+nF36SdLPcYweLsz+sMSKs8D7SUQdnk1UaHEec1KqHCCdidFw2RoyB1GihVWpbDL411b2CYS7iwbqKRvY7YVHlfPMMfSZXhxLSXulaQ5mgAiQ9JTa0Czub2tBtkLns5rCI+wDJkSNTtAkTpGW8oepGvqDblVHQeCWa/RoyKCoIbpbgOxfiaAuyN3uUQPxfYQIDAQAB';
+        $aop->alipayrsaPublicKey = 'FAAOCAQ8AMIIBCgKCAQEAsymouNF99FfWOHTv+STYvTX/gKaWvUCk+fi5UWXnm1R9USsZDlJ2ei7ZOo4wjTTZDsziDhyAMsQCAzALbTEMq4gTqil0qp05AdUeJ/MtgSE5pmekf0u3VkIZp9zRzLJoJWIXXwtfuPvGgORTyuIiJ1+nF36SdLPcYweLsz+sMSKs8D7SUQdnk1UaHEec1KqHCCdidFw2RoyB1GihVWpbDL411b2CYS7iwbqKRvY7YVHlfPMMfSZXhxLSXulaQ5mgAiQ9JTa0Czub2tBtkLns5rCI+wDJkSNTtAkTpGW8oepGvqDblVHQeCWa/RoyKCoIbpbgOxfiaAuyN3uUQPxfYQIDAQAB';
         
         //此处验签方式必须与下单时的签名方式一致
-        //$public_key = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsymouNF99FfWOHTv+STYvTX/gKaWvUCk+fi5UWXnm1R9USsZDlJ2ei7ZOo4wjTTZDsziDhyAMsQCAzALbTEMq4gTqil0qp05AdUeJ/MtgSE5pmekf0u3VkIZp9zRzLJoJWIXXwtfuPvGgORTyuIiJ1+nF36SdLPcYweLsz+sMSKs8D7SUQdnk1UaHEec1KqHCCdidFw2RoyB1GihVWpbDL411b2CYS7iwbqKRvY7YVHlfPMMfSZXhxLSXulaQ5mgAiQ9JTa0Czub2tBtkLns5rCI+wDJkSNTtAkTpGW8oepGvqDblVHQeCWa/RoyKCoIbpbgOxfiaAuyN3uUQPxfYQIDAQAB';
+        //$public_key = 'MIIBIjANBgkqhkiGsdfsdFAAOCAdfgfdAQEAsymouNF99FfWOHTv+STYvTX/gKaWvUCk+fi5UWXnm1R9USsZDlJ2ei7ZOo4wjTTZDsziDhyAMsQCAzALbTEMq4gTqil0qp05AdUeJ/MtgSE5pmekf0u3VkIZp9zRzLJoJWIXXwtfuPvGgORTyuIiJ1+nF36SdLPcYweLsz+sMSKs8D7SUQdnk1UaHEec1KqHCCdidFw2RoyB1GihVWpbDL411b2CYS7iwbqKRvY7YVHlfPMMfSZXhxLSXulaQ5mgAiQ9JTa0Czub2tBtkLns5rCI+wDJkSNTtAkTpGW8oepGvqDblVHQeCWa/RoyKCoIbpbgOxfiaAuyN3uUQPxfYQIDAQAB';
         $flag = $aop->rsaCheckV1($_POST, $public_path, "RSA2");
        
         //验签通过后再实现业务逻辑，比如修改订单表中的支付状态。
@@ -90,13 +90,13 @@ class Alipay extends Base
         
         //公共参数
         $Client = new \AopClient();//实例化支付宝sdk里面的AopClient类,下单时需要的操作,都在这个类里面
-        $param['app_id'] = '2018032702455466';
+        $param['app_id'] = '20180535732455466';
         $param['method'] = 'alipay.trade.app.pay';//接口名称，固定值
         $param['charset'] = 'utf-8';//请求使用的编码格式
         $param['sign_type'] = 'RSA2';//商户生成签名字符串所使用的签名算法类型
         $param['timestamp'] = date("Y-m-d H:i:s");//发送请求的时间
         $param['version'] = '1.0';//调用的接口版本，固定为：1.0
-        $param['notify_url'] = 'http://118.190.204.122/index.php/api/Alipay/alipayNotify';
+        $param['notify_url'] = 'http://ip/index.php/api/Alipay/alipayNotify';
         $param['biz_content'] = $con;//业务请求参数的集合,长度不限,json格式，即前面一步得到的
         
         $paramStr = $Client->getSignContent($param);//组装请求签名参数
@@ -118,19 +118,19 @@ class Alipay extends Base
         
         $aop = new \AopClient();
         $aop->gatewayUrl = 'https://openapi.alipay.com/gateway.do';
-        $aop->appId = '2018032702455466';
-        $aop->rsaPrivateKey = "MIIEpQIBAAKCAQEA0cEmXaMkSEJktsmjLQzq8K63vy5AR1gGjB5Z39TESAbJzUX/6TXWiRDpkuoBaMp5/oVz5jeDNeHkJpIFQUXts6CV8MKlFZS5ZR5oOU7zrhr8Jz8MVbBaUXIVqVxPL9lbG5yF+BBoQYl44iBebyf7Hxz+sZ3fhRM9sxoZ/VW3qyld9xtRp6zMa8mAfYxnK/JuGfvxAuB6Eceoo/8x9s9XVU17RpzXVG/l3biDIrOHx0Qs4Ij1s5puuaJxMs0M8QL8PUou0I23Oj2ISwnfoUj3CDGhhUYa19cjlvgrPHBpJE+SPfN5yn4C4H0iJwFf1XwZrn8ko3JL3rBxc2dHPgAorwIDAQABAoIBAEG1EgGvQ4RnWAlyrO1F6Ksw8FqxcG1pA9QNBfZ6PmqZxcnKLdquhOA3LhRZvctH8mNrBt2NcksE0mXKxF6oO0hT++SJ9REHn/QvTFL3ipp11Zutwn1tWz28UVDWm+/PVR0XMVh+O0qceAPORAbqLV6XxKl7XTPgzSk3+gBEQ98X6yd408BpDay+9cDOgxksSVUwcmIi1cOPNcsXs/mdl8s6tznS44CltULP81O4W6TilKsMvll8MGEfOnR4WrD68PqmZes5AHs0Bqg81pGcTgn29SYE4GBDNQEdwweryTDOMF5VPHk9h8vBsutaHMKaETTMecF9OCTHXCT3lBXEM5ECgYEA6uWis2gbqDL9Qr1N6zxAtuAf3XpGPQmD54VZwYf6MV1tEdeS2ouUVzLHfP/xZKNeQTpVmf5svlgmaQTktt7aYoIgQ8TeuR1ebjsWsXLYfVVwI01dMfMCv2UM92bdkLvuqIaH37EPVZv3WkK0QUJwMPeQEEp3Tve1/BjtI3dkBOMCgYEA5JlDzoo5gR9gf35NP8/hKyZJBAOjCwykTT+yZOtoq6gXDDrD5FmdNe2J7IcEe7Vde/OYEeKV/G3CalfrfS8K7GjMMJsFqOStZl9piAgMEyuSywsrMWcRIJS+L4B/Agx18mnqG6bv0tW5cjzfQuB43tPxKt43y0YAqCAZHQzo4sUCgYEAssEYBLFYQrKy2qQW9MnAcaqzdScE5pQkJf7r5AQnmIOBag+EOP35YDZLa0uWlsBgDQFofS0J8fxBFrBboPKMfGSMSyY5W+QGpZof1eAQ8aggEy1fm5BT6fTrXiaQvADYSLVAFzG1+q8bGDwk0njNyeXLYypYCuclPXh2lgPYQIMCgYEA5FcvwwSREih8ZH2NvjrwqQBSGN9lIilbiQoiMOpwoF6DvySH/fWBspd2mLv5P3TXT3PwJ5VUylP8yerOgDnYSHMZ20dOLPlXN5YAvO+E2DVDKOwcFfnkws2w95P7ydkWi7E+NqbWkZwI5FJnlM7SDYpZML/NrY9cIpQFYd4+Vh0CgYEAivsTtKzo0K4B/kT+HJjEXHOZo1mwM9scwG4c1rAbbWBP3ugp1FZGOJ5IWUGSbbC678feaexeAIglvkDti0QhW3atBx5cNSnZ4lwYueFGQlqhPZEzJNP0z/rUxQKM6KWfKRF2HQNi4bUzLELRHicAULG87q3dBT+j+3SdcDOuk5Q=";
+        $aop->appId = 'sfsdf55466';
+        $aop->rsaPrivateKey = "MIIEpQIBAAdsfdsJktsmjLQzq8K63vy5AR1gGjB5Z39TESAbJzUX/6TXWiRDpkuoBaMp5/oVz5jeDNeHkJpIFQUXts6CV8MKlFZS5ZR5oOU7zrhr8Jz8MVbBaUXIVqVxPL9lbG5yF+BBoQYl44iBebyf7Hxz+sZ3fhRM9sxoZ/VW3qyld9xtRp6zMa8mAfYxnK/JuGfvxAuB6Eceoo/8x9s9XVU17RpzXVG/l3biDIrOHx0Qs4Ij1s5puuaJxMs0M8QL8PUou0I23Oj2ISwnfoUj3CDGhhUYa19cjlvgrPHBpJE+SPfN5yn4C4H0iJwFf1XwZrn8ko3JL3rBxc2dHPgAorwIDAQABAoIBAEG1EgGvQ4RnWAlyrO1F6Ksw8FqxcG1pA9QNBfZ6PmqZxcnKLdquhOA3LhRZvctH8mNrBt2NcksE0mXKxF6oO0hT++SJ9REHn/QvTFL3ipp11Zutwn1tWz28UVDWm+/PVR0XMVh+O0qceAPORAbqLV6XxKl7XTPgzSk3+gBEQ98X6yd408BpDay+9cDOgxksSVUwcmIi1cOPNcsXs/mdl8s6tznS44CltULP81O4W6TilKsMvll8MGEfOnR4WrD68PqmZes5AHs0Bqg81pGcTgn29SYE4GBDNQEdwweryTDOMF5VPHk9h8vBsutaHMKaETTMecF9OCTHXCT3lBXEM5ECgYEA6uWis2gbqDL9Qr1N6zxAtuAf3XpGPQmD54VZwYf6MV1tEdeS2ouUVzLHfP/xZKNeQTpVmf5svlgmaQTktt7aYoIgQ8TeuR1ebjsWsXLYfVVwI01dMfMCv2UM92bdkLvuqIaH37EPVZv3WkK0QUJwMPeQEEp3Tve1/BjtI3dkBOMCgYEA5JlDzoo5gR9gf35NP8/hKyZJBAOjCwykTT+yZOtoq6gXDDrD5FmdNe2J7IcEe7Vde/OYEeKV/G3CalfrfS8K7GjMMJsFqOStZl9piAgMEyuSywsrMWcRIJS+L4B/Agx18mnqG6bv0tW5cjzfQuB43tPxKt43y0YAqCAZHQzo4sUCgYEAssEYBLFYQrKy2qQW9MnAcaqzdScE5pQkJf7r5AQnmIOBag+EOP35YDZLa0uWlsBgDQFofS0J8fxBFrBboPKMfGSMSyY5W+QGpZof1eAQ8aggEy1fm5BT6fTrXiaQvADYSLVAFzG1+q8bGDwk0njNyeXLYypYCuclPXh2lgPYQIMCgYEA5FcvwwSREih8ZH2NvjrwqQBSGN9lIilbiQoiMOpwoF6DvySH/fWBspd2mLv5P3TXT3PwJ5VUylP8yerOgDnYSHMZ20dOLPlXN5YAvO+E2DVDKOwcFfnkws2w95P7ydkWi7E+NqbWkZwI5FJnlM7SDYpZML/NrY9cIpQFYd4+Vh0CgYEAivsTtKzo0K4B/kT+HJjEXHOZo1mwM9scwG4c1rAbbWBP3ugp1FZGOJ5IWUGSbbC678feaexeAIglvkDti0QhW3atBx5cNSnZ4lwYueFGQlqhPZEzJNP0z/rUxQKM6KWfKRF2HQNi4bUzLELRHicAULG87q3dBT+j+3SdcDOuk5Q=";
         
         
         
-        $aop->alipayrsaPublicKey='MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsymouNF99FfWOHTv+STYvTX/gKaWvUCk+fi5UWXnm1R9USsZDlJ2ei7ZOo4wjTTZDsziDhyAMsQCAzALbTEMq4gTqil0qp05AdUeJ/MtgSE5pmekf0u3VkIZp9zRzLJoJWIXXwtfuPvGgORTyuIiJ1+nF36SdLPcYweLsz+sMSKs8D7SUQdnk1UaHEec1KqHCCdidFw2RoyB1GihVWpbDL411b2CYS7iwbqKRvY7YVHlfPMMfSZXhxLSXulaQ5mgAiQ9JTa0Czub2tBtkLns5rCI+wDJkSNTtAkTpGW8oepGvqDblVHQeCWa/RoyKCoIbpbgOxfiaAuyN3uUQPxfYQIDAQAB';
+        $aop->alipayrsaPublicKey='MIIBIjANsdfdsfIIBCgKCAQEAsymouNF99FfWOHTv+STYvTX/gKaWvUCk+fi5UWXnm1R9USsZDlJ2ei7ZOo4wjTTZDsziDhyAMsQCAzALbTEMq4gTqil0qp05AdUeJ/MtgSE5pmekf0u3VkIZp9zRzLJoJWIXXwtfuPvGgORTyuIiJ1+nF36SdLPcYweLsz+sMSKs8D7SUQdnk1UaHEec1KqHCCdidFw2RoyB1GihVWpbDL411b2CYS7iwbqKRvY7YVHlfPMMfSZXhxLSXulaQ5mgAiQ9JTa0Czub2tBtkLns5rCI+wDJkSNTtAkTpGW8oepGvqDblVHQeCWa/RoyKCoIbpbgOxfiaAuyN3uUQPxfYQIDAQAB';
         $aop->apiVersion = '1.0';
         $aop->signType = 'RSA2';
         $aop->postCharset='UTF-8';
         $aop->format='json';
         
         $param = [
-            "out_trade_no"=>"201805181302447290",
+            "out_trade_no"=>"2018sdfsd302447290",
             "refund_amount"=>0.1,
             "refund_reason"=>"正常退款"
         ];
@@ -158,10 +158,10 @@ class Alipay extends Base
         
         $aop = new \AopClient ();
         $aop->gatewayUrl = 'https://openapi.alipay.com/gateway.do';
-        $aop->appId = '2018032702455466';
-        $aop->rsaPrivateKey = "MIIEpQIBAAKCAQEA0cEmXaMkSEJktsmjLQzq8K63vy5AR1gGjB5Z39TESAbJzUX/6TXWiRDpkuoBaMp5/oVz5jeDNeHkJpIFQUXts6CV8MKlFZS5ZR5oOU7zrhr8Jz8MVbBaUXIVqVxPL9lbG5yF+BBoQYl44iBebyf7Hxz+sZ3fhRM9sxoZ/VW3qyld9xtRp6zMa8mAfYxnK/JuGfvxAuB6Eceoo/8x9s9XVU17RpzXVG/l3biDIrOHx0Qs4Ij1s5puuaJxMs0M8QL8PUou0I23Oj2ISwnfoUj3CDGhhUYa19cjlvgrPHBpJE+SPfN5yn4C4H0iJwFf1XwZrn8ko3JL3rBxc2dHPgAorwIDAQABAoIBAEG1EgGvQ4RnWAlyrO1F6Ksw8FqxcG1pA9QNBfZ6PmqZxcnKLdquhOA3LhRZvctH8mNrBt2NcksE0mXKxF6oO0hT++SJ9REHn/QvTFL3ipp11Zutwn1tWz28UVDWm+/PVR0XMVh+O0qceAPORAbqLV6XxKl7XTPgzSk3+gBEQ98X6yd408BpDay+9cDOgxksSVUwcmIi1cOPNcsXs/mdl8s6tznS44CltULP81O4W6TilKsMvll8MGEfOnR4WrD68PqmZes5AHs0Bqg81pGcTgn29SYE4GBDNQEdwweryTDOMF5VPHk9h8vBsutaHMKaETTMecF9OCTHXCT3lBXEM5ECgYEA6uWis2gbqDL9Qr1N6zxAtuAf3XpGPQmD54VZwYf6MV1tEdeS2ouUVzLHfP/xZKNeQTpVmf5svlgmaQTktt7aYoIgQ8TeuR1ebjsWsXLYfVVwI01dMfMCv2UM92bdkLvuqIaH37EPVZv3WkK0QUJwMPeQEEp3Tve1/BjtI3dkBOMCgYEA5JlDzoo5gR9gf35NP8/hKyZJBAOjCwykTT+yZOtoq6gXDDrD5FmdNe2J7IcEe7Vde/OYEeKV/G3CalfrfS8K7GjMMJsFqOStZl9piAgMEyuSywsrMWcRIJS+L4B/Agx18mnqG6bv0tW5cjzfQuB43tPxKt43y0YAqCAZHQzo4sUCgYEAssEYBLFYQrKy2qQW9MnAcaqzdScE5pQkJf7r5AQnmIOBag+EOP35YDZLa0uWlsBgDQFofS0J8fxBFrBboPKMfGSMSyY5W+QGpZof1eAQ8aggEy1fm5BT6fTrXiaQvADYSLVAFzG1+q8bGDwk0njNyeXLYypYCuclPXh2lgPYQIMCgYEA5FcvwwSREih8ZH2NvjrwqQBSGN9lIilbiQoiMOpwoF6DvySH/fWBspd2mLv5P3TXT3PwJ5VUylP8yerOgDnYSHMZ20dOLPlXN5YAvO+E2DVDKOwcFfnkws2w95P7ydkWi7E+NqbWkZwI5FJnlM7SDYpZML/NrY9cIpQFYd4+Vh0CgYEAivsTtKzo0K4B/kT+HJjEXHOZo1mwM9scwG4c1rAbbWBP3ugp1FZGOJ5IWUGSbbC678feaexeAIglvkDti0QhW3atBx5cNSnZ4lwYueFGQlqhPZEzJNP0z/rUxQKM6KWfKRF2HQNi4bUzLELRHicAULG87q3dBT+j+3SdcDOuk5Q=";
+        $aop->appId = '20180dsfsd455466';
+        $aop->rsaPrivateKey = "MIIEpQIsdfsdaMkSEJktsmjLQzq8K63vy5AR1gGjB5Z39TESAbJzUX/6TXWiRDpkuoBaMp5/oVz5jeDNeHkJpIFQUXts6CV8MKlFZS5ZR5oOU7zrhr8Jz8MVbBaUXIVqVxPL9lbG5yF+BBoQYl44iBebyf7Hxz+sZ3fhRM9sxoZ/VW3qyld9xtRp6zMa8mAfYxnK/JuGfvxAuB6Eceoo/8x9s9XVU17RpzXVG/l3biDIrOHx0Qs4Ij1s5puuaJxMs0M8QL8PUou0I23Oj2ISwnfoUj3CDGhhUYa19cjlvgrPHBpJE+SPfN5yn4C4H0iJwFf1XwZrn8ko3JL3rBxc2dHPgAorwIDAQABAoIBAEG1EgGvQ4RnWAlyrO1F6Ksw8FqxcG1pA9QNBfZ6PmqZxcnKLdquhOA3LhRZvctH8mNrBt2NcksE0mXKxF6oO0hT++SJ9REHn/QvTFL3ipp11Zutwn1tWz28UVDWm+/PVR0XMVh+O0qceAPORAbqLV6XxKl7XTPgzSk3+gBEQ98X6yd408BpDay+9cDOgxksSVUwcmIi1cOPNcsXs/mdl8s6tznS44CltULP81O4W6TilKsMvll8MGEfOnR4WrD68PqmZes5AHs0Bqg81pGcTgn29SYE4GBDNQEdwweryTDOMF5VPHk9h8vBsutaHMKaETTMecF9OCTHXCT3lBXEM5ECgYEA6uWis2gbqDL9Qr1N6zxAtuAf3XpGPQmD54VZwYf6MV1tEdeS2ouUVzLHfP/xZKNeQTpVmf5svlgmaQTktt7aYoIgQ8TeuR1ebjsWsXLYfVVwI01dMfMCv2UM92bdkLvuqIaH37EPVZv3WkK0QUJwMPeQEEp3Tve1/BjtI3dkBOMCgYEA5JlDzoo5gR9gf35NP8/hKyZJBAOjCwykTT+yZOtoq6gXDDrD5FmdNe2J7IcEe7Vde/OYEeKV/G3CalfrfS8K7GjMMJsFqOStZl9piAgMEyuSywsrMWcRIJS+L4B/Agx18mnqG6bv0tW5cjzfQuB43tPxKt43y0YAqCAZHQzo4sUCgYEAssEYBLFYQrKy2qQW9MnAcaqzdScE5pQkJf7r5AQnmIOBag+EOP35YDZLa0uWlsBgDQFofS0J8fxBFrBboPKMfGSMSyY5W+QGpZof1eAQ8aggEy1fm5BT6fTrXiaQvADYSLVAFzG1+q8bGDwk0njNyeXLYypYCuclPXh2lgPYQIMCgYEA5FcvwwSREih8ZH2NvjrwqQBSGN9lIilbiQoiMOpwoF6DvySH/fWBspd2mLv5P3TXT3PwJ5VUylP8yerOgDnYSHMZ20dOLPlXN5YAvO+E2DVDKOwcFfnkws2w95P7ydkWi7E+NqbWkZwI5FJnlM7SDYpZML/NrY9cIpQFYd4+Vh0CgYEAivsTtKzo0K4B/kT+HJjEXHOZo1mwM9scwG4c1rAbbWBP3ugp1FZGOJ5IWUGSbbC678feaexeAIglvkDti0QhW3atBx5cNSnZ4lwYueFGQlqhPZEzJNP0z/rUxQKM6KWfKRF2HQNi4bUzLELRHicAULG87q3dBT+j+3SdcDOuk5Q=";
         
-        $aop->alipayrsaPublicKey='MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsymouNF99FfWOHTv+STYvTX/gKaWvUCk+fi5UWXnm1R9USsZDlJ2ei7ZOo4wjTTZDsziDhyAMsQCAzALbTEMq4gTqil0qp05AdUeJ/MtgSE5pmekf0u3VkIZp9zRzLJoJWIXXwtfuPvGgORTyuIiJ1+nF36SdLPcYweLsz+sMSKs8D7SUQdnk1UaHEec1KqHCCdidFw2RoyB1GihVWpbDL411b2CYS7iwbqKRvY7YVHlfPMMfSZXhxLSXulaQ5mgAiQ9JTa0Czub2tBtkLns5rCI+wDJkSNTtAkTpGW8oepGvqDblVHQeCWa/RoyKCoIbpbgOxfiaAuyN3uUQPxfYQIDAQAB';
+        $aop->alipayrsaPublicKey='MIIsfdf0BAQEFAAOCAQ8AMIIBCgKCAQEAsymouNF99FfWOHTv+STYvTX/gKaWvUCk+fi5UWXnm1R9USsZDlJ2ei7ZOo4wjTTZDsziDhyAMsQCAzALbTEMq4gTqil0qp05AdUeJ/MtgSE5pmekf0u3VkIZp9zRzLJoJWIXXwtfuPvGgORTyuIiJ1+nF36SdLPcYweLsz+sMSKs8D7SUQdnk1UaHEec1KqHCCdidFw2RoyB1GihVWpbDL411b2CYS7iwbqKRvY7YVHlfPMMfSZXhxLSXulaQ5mgAiQ9JTa0Czub2tBtkLns5rCI+wDJkSNTtAkTpGW8oepGvqDblVHQeCWa/RoyKCoIbpbgOxfiaAuyN3uUQPxfYQIDAQAB';
         $aop->apiVersion = '1.0';
         
         $aop->signType = 'RSA2';
